@@ -17,9 +17,10 @@ def shopper(book_name) :
     #print soup
     author = soup.find_all(True, {"class" : "contributors"})
     bookname = soup.find_all(True, {"class" : "product-info-title"})
+    rating = soup.find_all(True, {"class" : "hide-content"})
     print " All books displayed by the search results are : --> \n"
-    for i in range (len(author)) :
-        print i+1, bookname[i].text.encode("utf-8","ignore"), author[i].text.encode("utf-8","ignore")
+    for i in range (len(bookname)) :
+        print i+1, bookname[i].text.encode("utf-8","ignore"), author[i].text.encode("utf-8","ignore"), rating[i].text.encode("utf-8","ignore")
     #f = open('tempfile', 'w')
     #f.write(soup)
 
