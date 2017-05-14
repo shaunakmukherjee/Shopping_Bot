@@ -14,12 +14,12 @@ def shopper(book_name) :
     content = requests.get(url).text
     #print content
     soup = bs(content, "lxml")
-    print soup
+    #print soup
     author = soup.find_all(True, {"class" : "contributors"})
-    rating = soup.find_all(True, {"class" : "product-info"})
+    bookname = soup.find_all(True, {"class" : "product-info-title"})
     print " All books displayed by the search results are : --> \n"
-    #for i in range (len(author)) :
-        #print i+1, rating[i].text.encode("utf-8","ignore"), "|"    
+    for i in range (len(author)) :
+        print i+1, bookname[i].text.encode("utf-8","ignore"), author[i].text.encode("utf-8","ignore")
     #f = open('tempfile', 'w')
     #f.write(soup)
 
