@@ -20,15 +20,22 @@ def shopper(book_name) :
     rating = soup.find_all(True, {"class" : "hide-content"})
     print " All books displayed by the search results are : --> \n"
     for i in range (len(bookname)) :
-        print i+1, bookname[i].text.encode("utf-8","ignore"), author[i].text.encode("utf-8","ignore"), rating[i].text.encode("utf-8","ignore")
-    print "\nEnter your choice ! \n"    
-    option = raw_input()
-    AddtoBag(option)
+        print i+1, bookname[i].text.encode("utf-8","ignore"), author[i].text.encode("utf-8","ignore"), rating[i].text.encode("utf-8","ignore")    
+    option = input("Enter a choice! \n")
+    
+    # taking the raw input and then calling the addtobag function with book and option
+    
+    book = bookname[option]
+    AddtoBag(option, book)
+    
     #f = open('tempfile', 'w')
     #f.write(soup)
 
-def AddtoBag (option) :
+def AddtoBag (option, book) :
+    
     # the book name has to be concatenated by '-''s between titles (e.g.thousand-suns-khaled-hossaini, etc.
+    url = 'http://www.barnesandnoble.com/w/' + book + '/*ean=*'
+    print "new url=> ", url
 
 
 def welcomeMenu() :
