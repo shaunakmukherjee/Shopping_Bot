@@ -21,8 +21,15 @@ def shopper(book_name) :
     print " All books displayed by the search results are : --> \n"
     for i in range (len(bookname)) :
         print i+1, bookname[i].text.encode("utf-8","ignore"), author[i].text.encode("utf-8","ignore"), rating[i].text.encode("utf-8","ignore")
+    print "\nEnter your choice ! \n"    
+    option = raw_input()
+    AddtoBag(option)
     #f = open('tempfile', 'w')
     #f.write(soup)
+
+def AddtoBag (option) :
+    # the book name has to be concatenated by '-''s between titles (e.g.thousand-suns-khaled-hossaini, etc.
+
 
 def welcomeMenu() :
     print " ============================================================"
@@ -44,5 +51,5 @@ while loop:
         bookName = raw_input()
         print "entered book name is: ", bookName
         shopper(bookName)
-
+        
 
