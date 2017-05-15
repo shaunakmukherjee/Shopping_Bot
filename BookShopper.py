@@ -38,7 +38,7 @@ def AddtoBag (option) :
     print "new url=> ", url
     c = requests.get(url).text
     soup = bs(c, "lxml")
-    print soup
+    # print soup
 
     # now extracting elements
 
@@ -51,6 +51,38 @@ def AddtoBag (option) :
     print "\nCURRENT PRICE --> ", current_price.text.encode("utf-8")
     print "\n",discount.text.encode("utf-8"), "!!"
     
+
+    addtobag = soup.find(True, {"class" : "btn-addtocart btn-pdp-addtocart"})
+    print "Do you want to add to cart? -> ", addtobag
+
+    # if he wants to add to cart, the program goes to the shipping / form fillup page, otherwise back to menu
+    buyornot = input("Do you want to proceed? \nPress Y to proceed, N to go back to menu");
+
+    if buyornot =='Y' : 
+        Shipping ()
+
+
+    #<input name="/atg/commerce/order/purchase/CartModifierFormHandler.catalogRefIds" value="9781594483851" type="hidden"><input name="_D:/atg/commerce/order/purchase/CartModifierFormHandler.catalogRefIds" value=" " type="hidden"><input value="Add to Bag" class="btn-addtocart btn-pdp-addtocart" type="submit">
+
+
+# method to fill out form and ship
+
+def Shipping () :
+    
+    url = 'https://www.barnesandnoble.com/checkout/shipping.jsp?_requestid=*'
+
+    print "\nshipping URL => ", url
+    con = requests.get(url).text
+    soup = bs(c, "lxml")
+    print soup
+
+    # new soup of fill out form as guest
+
+    #let's extract elements now !
+
+
+
+
 
 def welcomeMenu() :
     print " ============================================================"
