@@ -25,18 +25,32 @@ def shopper(book_name) :
     
     # taking the raw input and then calling the addtobag function with book and option
     
-    book = bookname[option]
-    AddtoBag(option, book)
+    #book = bookname[option]
+    AddtoBag(option)
     
     #f = open('tempfile', 'w')
     #f.write(soup)
 
-def AddtoBag (option, book) :
+def AddtoBag (option) :
     
     # the book name has to be concatenated by '-''s between titles (e.g.thousand-suns-khaled-hossaini, etc.
-    url = 'http://www.barnesandnoble.com/w/' + book + '/*ean=*'
+    url = 'http://www.barnesandnoble.com/w/thousand-splendid-suns-khaled-hosseini/1100311165?ean=9781594483851'
     print "new url=> ", url
+    c = requests.get(url).text
+    soup = bs(c, "lxml")
+    print soup
 
+    # now extracting elements
+
+    detailed_review = soup.find(True, {"class" : "flexColumn"})
+    current_price = soup.find(True, {"class" : "price current-price"})
+    old_price = soup.find(True, {"class" : "old-price"})
+    discount = soup.find(True, {"class" : "discount-amount"})
+    print "Review of the book -->\n", detailed_review.text.encode("utf-8")
+    print "Old Price --> ", old_price.text.encode("utf-8") 
+    print "\nCURRENT PRICE --> ", current_price.text.encode("utf-8")
+    print "\n",discount.text.encode("utf-8"), "!!"
+    
 
 def welcomeMenu() :
     print " ============================================================"
