@@ -1,10 +1,15 @@
+""" 
+Bookshopper.py
+
+Base function which contains the menu-driven initial approach to the Shopping Bot
+Authors : Shaunak Mukherjee ; Vijayaram Illa
+
+"""
+import sys
 import requests
 from bs4 import BeautifulSoup as bs
 from bookSearchQuery import bookSearch
 
-# Base function to create a query and send it to 
-# webserver. Modify this later to include this as
-# seperate python file.
 
 def shopper(book_name) :
     bookname = book_name.lower()
@@ -13,7 +18,7 @@ def shopper(book_name) :
     bookList = bookSearch(url)
 
     #call the print function
-    displayResults(bookList)
+        displayResults(bookList)
     # ask user to select a book
     """
     bookNo = input("Slect the book number to checkout or press enter exit to main menu: ") 
@@ -22,6 +27,9 @@ def shopper(book_name) :
     else :
         addToBag(bookList, bookNo)
     """
+
+def author_search(author_name) :
+
 def displayResults(bookList) : 
 
     print " ============================================================"
@@ -40,7 +48,7 @@ def addToBag (bookList, bookNo) :
     print "Selected Book: ", bookList[bookNo - 1]["title"], " by ", bookList[bookNo - 1]["author"]
     newURL = 'http://www.barnesandnoble.com/s/' + bookList[bookNo - 1]["url"]
     content = requests.get(newURL).text
-"""    soup = bs(content, "lxml")
+"    soup = bs(content, "lxml")
     print soup.prettify()
     detailed_review = soup.find(True, {"class" : "flexColumn"})
     current_price = soup.find(True, {"class" : "price current-price"})
@@ -59,14 +67,14 @@ def addToBag (bookList, bookNo) :
 
 
 def welcomeMenu() :
-    print " ============================================================"
-    print " ************** 600.466 Automatic BookShopper ***************" 
-    print " ============================================================"
-    print "1. Select to enter the Book Name"
-    print "2. Select to Enter the Author Name"
-    print "3. Select to get the reviews of a book"
+    print " ============================================================================\n"
+    print " **************Welcome to the  600.466 Automatic BookShopper ****************\n" 
+    print " ============================================================================\n"
+    print "1. Search through Book Name"
+    print "2. Search through Author Name"
+    print "3. Get the reviews of a book"
     print "4. Exit"
-    print 67 * "-"
+    #print 67 * "-"
 
 
 loop=True
@@ -79,3 +87,5 @@ while loop:
         bookName = raw_input()
         print "entered book name is: ", bookName
         shopper(bookName)
+    if option == 4 :
+        sys.exit() # to terminate the script

@@ -1,4 +1,5 @@
 import requests
+import sys
 from bs4 import BeautifulSoup as bs
 from bookSearchQuery import bookSearch
 
@@ -27,10 +28,19 @@ def displayResults(bookList) :
     print " ============================================================"
     
 
-    print " NUMBER" ," " * 5,"BOOK NAME"," " * 20, "AUTHOR"
+    print " NUMBER" ," " * 5,"BOOK NAME"," " * 30, "AUTHOR"
     print "","-" * 60
     for i in range(len(bookList)):
-        print i+1 ," " * 5,bookList[i]["title"]," " * 20,bookList[i]["author"]
+        print i+1 ," " * 7,bookList[i]["title"]," " * 20,bookList[i]["author"]
+
+def author_search(author_name) :
+    authorname = author_name.lower()
+    authorName = '+'.join(authorname.split())
+    url =  'http://www.barnesandnoble.com/s/' + authorName + '?_requestid=*'
+    authorList = bookSearch(url)
+
+    # like in the shopper, calling the print function
+    displayResults(authorList)
 
     
 def AddtoBag (option, book) :
@@ -41,14 +51,13 @@ def AddtoBag (option, book) :
 
 
 def welcomeMenu() :
-    print " ============================================================"
-    print " ************** 600.466 Automatic BookShopper ***************" 
-    print " ============================================================"
-    print "1. Select to enter the Book Name"
-    print "2. Select to Enter the Author Name"
-    print "3. Select to get the reviews of a book"
+    print " ======================================================================\n"
+    print " ************ Welcome to the 600.466 Automatic BookShopper ************\n" 
+    print " ======================================================================\n"
+    print "1. Search books by the Book Name"
+    print "2. Search books by the Author Name"
+    print "3. Get the reviews of a book"
     print "4. Exit"
-    print 67 * "-"
 
 loop=True
 
@@ -58,5 +67,12 @@ while loop:
     if option == 1 :
         print "Enter the name of the book you wish to buy: "
         bookName = raw_input()
-        print "entered book name is: ", bookName
+        print "\n\nYou're currently searching for books named : ", bookName
         shopper(bookName)
+    if option == 2 :
+        print "Enter the name of the author whose book you wish to buy: "
+        authorName = raw_input()
+        print "\n\nYou're currently searching for books authored by : ", authorName
+        author_search(authorName)
+    if option == 4 :
+        sys.exit()
