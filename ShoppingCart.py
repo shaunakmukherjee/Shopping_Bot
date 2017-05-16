@@ -48,6 +48,9 @@ class ShoppingCart:
     def getCartNumber(self):
         return len(self.cart) + 1
 
+    # Display the cart and all the details
+    def displayCart(self, book, quantity):
+
     #remove a given book from the cart
     def removeFromCart(self, book):
         index = self.hasCart(book)
@@ -58,7 +61,7 @@ class ShoppingCart:
             #rearrange the cart to remove the selected item 
             self.cart.pop(index)
 
-    #chaneg the quantity of a book in the cart
+    #change the quantity of a book in the cart
     def changeExistingQuantity(self, book, newQuantity) :
         index = self.hasCart(book)
         if index == -1 :

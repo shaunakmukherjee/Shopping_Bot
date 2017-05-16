@@ -16,6 +16,8 @@ class Book :
         self.bookInfo["quantity"] = 0
         pass
 
+    # auxiliary function added so that the __init__ works properly
+
     def __getitem__(self, item):
         return self.bookInfo[item]
     
