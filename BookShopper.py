@@ -40,7 +40,7 @@ def addToBag (bookList, bookNo) :
     print "Selected Book: ", bookList[bookNo - 1]["title"], " by ", bookList[bookNo - 1]["author"]
     newURL = 'http://www.barnesandnoble.com/s/' + bookList[bookNo - 1]["url"]
     content = requests.get(newURL).text
-    soup = bs(content, "lxml")
+"""    soup = bs(content, "lxml")
     print soup.prettify()
     detailed_review = soup.find(True, {"class" : "flexColumn"})
     current_price = soup.find(True, {"class" : "price current-price"})
@@ -55,7 +55,8 @@ def addToBag (bookList, bookNo) :
     else :
         #call display results function to display results again
         return
-"""    
+"""
+
 
 def welcomeMenu() :
     print " ============================================================"
