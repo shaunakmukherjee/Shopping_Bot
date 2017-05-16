@@ -56,10 +56,10 @@ def AddtoBag (option) :
     print "Do you want to add to cart? -> ", addtobag
 
     # if he wants to add to cart, the program goes to the shipping / form fillup page, otherwise back to menu
-    buyornot = input("Do you want to proceed? \nPress Y to proceed, N to go back to menu");
+    #buyornot = input("Do you want to proceed? \nPress Y to proceed, N to go back to menu");
 
-    if buyornot =='Y' : 
-        Shipping ()
+    #if buyornot == 'Y' : 
+    Shipping ()
 
 
     #<input name="/atg/commerce/order/purchase/CartModifierFormHandler.catalogRefIds" value="9781594483851" type="hidden"><input name="_D:/atg/commerce/order/purchase/CartModifierFormHandler.catalogRefIds" value=" " type="hidden"><input value="Add to Bag" class="btn-addtocart btn-pdp-addtocart" type="submit">
@@ -71,15 +71,36 @@ def Shipping () :
     
     url = 'https://www.barnesandnoble.com/checkout/shipping.jsp?_requestid=*'
 
+    global fname, lname, address, suite, city, state, zip, phone, company
     print "\nshipping URL => ", url
-    con = requests.get(url).text
-    soup = bs(c, "lxml")
-    print soup
+    #c = requests.get(url).text
+    #soup = bs(c, "lxml")
+    #print soup
 
     # new soup of fill out form as guest
 
     #let's extract elements now !
+    
+    lines = [] # declaring an empty list to store lines
 
+    userdata = open('userdata.txt')
+    lines = userdata.readlines()
+
+    fname = lines[0]
+    lname = lines [1]
+    address = lines [2]
+    suite = lines [3]
+    city = lines [4]
+    state = lines [5]
+    zip = lines [6]
+    phone = lines [7]
+    company = lines [8]
+
+    print "\n===============USER DETAILS CONFIRMATION=================\n";
+    print "\nFirst Name - ",fname,"\nLast name - ", lname,"\nAddress - ",address, "\nSuite - ",suite,"\nCity - ", city, "\nState - ",state
+    print "\nZIP - ", zip, "\nPhone - ", phone, "\nCompany - ",company
+    print "=============================================================";
+    print "\n\nItem will be shipped to this address!"
 
 
 
