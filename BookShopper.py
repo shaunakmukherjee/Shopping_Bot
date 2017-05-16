@@ -28,8 +28,6 @@ def shopper(book_name) :
         addToBag(bookList, bookNo)
     """
 
-def author_search(author_name) :
-
 def displayResults(bookList) : 
 
     print " ============================================================"
