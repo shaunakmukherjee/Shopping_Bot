@@ -1,12 +1,13 @@
 import requests
 from bs4 import BeautifulSoup as bs
 import re
+from Book import Book
+import ShoppingCart
 
 # Base function to create a query and send it to 
 # webserver. Modify this later to include this as
 # seperate python file.
 def bookSearch(url) :
-    print "url: ", url
     content = requests.get(url).text
     soup = bs(content, "lxml")
 
@@ -18,24 +19,19 @@ def bookSearch(url) :
         bookInfo = {}
         lists = div.find_all(True, {"class" : "contributors"})[0]
         author = lists.contents[1].string
+        #bookInfo["author"] = author
 
-        bookInfo["author"] = author
         product_list = div.find_all(True, {"class" : "product-info-title"})[0]
         title = product_list.contents[1].string
+        #bookInfo["title"] = title
 
-        bookInfo["title"] = title
         links = product_list.findAll('a')
         for a in links:
             #copy to the book_info
             url = a['href']
         url = url.split(";")[0]
-        bookInfo["url"] = url
+        #bookInfo["url"] = url
 
+        bookInfo = Book(author, title, url)
         bookList.append(bookInfo)
     return bookList
-"""
-    for i in range(len(bookList)):
-        info = bookList[i]
-        print "book no: ", i
-        print info
-"""
