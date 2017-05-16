@@ -28,7 +28,7 @@ class ShoppingCart:
     def incrementQuantity(self, book):
         index = self.hasCart(book)
         if index == -1 :
-            print "Book Not present in cart"
+            print "Book Not present in cart!"
         else :
             book.incrementQuantity()
             
@@ -50,6 +50,12 @@ class ShoppingCart:
 
     # Display the cart and all the details
     def displayCart(self, book, quantity):
+       print "\n=====================YOUR CART==================\n"
+       print "\nBook Title = ", book.getTitle()
+       print "\nAuthor = ", book.getAuthor()
+       print "\nBook URL = ", book.getURL()
+       print "\nQuantity = ", self.bookInfo["quantity"]
+       print "\n===================THAT'S ALL FOLKS!============\n"
 
     #remove a given book from the cart
     def removeFromCart(self, book):
