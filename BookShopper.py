@@ -4,9 +4,11 @@ BookShopper.py: Main Shopper program to start the search and cart transactions
 Authors: Vijaya Ram Illa
          Shaunak Mukherjee
 """
-
+import re
 import sys
 import requests
+import lxml.html
+import HTMLParser
 from bs4 import BeautifulSoup as bs
 from bookSearchQuery import bookSearch
 from Book import Book
@@ -42,6 +44,12 @@ def author_search(author_name) :
     else :
 		addToCart(authorList, bookNo)
 
+# helper function to convert HTML entities to Unicode
+def convert(text):
+    """Converts HTML entities to unicode.  For example '&amp;' becomes '&'."""
+    text = unicode(BeautifulStoneSoup(text, convertEntities=BeautifulStoneSoup.ALL_ENTITIES))
+    return text
+
 def displayResults(bookList) : 
 
     print " ============================================================"
@@ -56,7 +64,19 @@ def displayResults(bookList) :
 		print i+1 ," " * 5,bookList[i].getTitle()," " * 20,bookList[i].getAuthor()
     
 
-# function to see reviews / prices and add to cart if the user likes it !
+# helper function to try and extract contents out of soup
+
+def soup_extract(newURL) :
+    content = requests.get(newURL).text
+    soup = bs(content, "lxml")
+    # print soup.prettify()
+    review = soup.find(id="EditorialReviews")
+    current_price = soup.find(True, {"class" : "price current-price"})
+    discount = soup.find(True, {"class" : "discount-amount"})
+    print "Review of the book -->\n", review
+    print "\nCURRENT PRICE --> ", current_price
+
+# function to show reviews and prices for reference
 
 def addToCart (bookList, bookNo) :
     cart = ShoppingCart()
@@ -65,14 +85,7 @@ def addToCart (bookList, bookNo) :
     newURL = 'http://www.barnesandnoble.com/s/' + bookList[bookNo - 1].getURL()
     print "\nThe new URL is ->", newURL
     
-    content = requests.get(newURL).text
-    soup = bs(content, "lxml")
-    #print soup.prettify()
-    detailed_review = soup.find(True, {"class" : "flexColumn"})
-    current_price = soup.find(True, {"class" : "price current-price"})
-    discount = soup.find(True, {"class" : "discount-amount"})
-    print "Review of the book -->\n", detailed_review.text.encode("utf-8")
-    print "\nCURRENT PRICE --> ", current_price.text.encode
+    soup_extract(newURL)
 
     proceed = raw_input("Add the book to the shopping bag?(y/n):  ")
     if raw_input == 'y' :
