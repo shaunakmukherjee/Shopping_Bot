@@ -33,7 +33,7 @@ class ShoppingCart:
             book.incrementQuantity()
             
     # Add book to the cart
-    def add(self, book, quantity):
+    def add(self, book):
         index = self.hasCart(book)
         if index == -1 :
             self.cart.append(book)
@@ -48,14 +48,14 @@ class ShoppingCart:
     def getCartNumber(self):
         return len(self.cart) + 1
 
-    # Display the cart and all the details
-    def displayCart(self, book, quantity):
-       print "\n=====================YOUR CART==================\n"
-       print "\nBook Title = ", book.getTitle()
-       print "\nAuthor = ", book.getAuthor()
-       print "\nBook URL = ", book.getURL()
-       print "\nQuantity = ", self.bookInfo["quantity"]
-       print "\n===================THAT'S ALL FOLKS!============\n"
+    # Display the details of the books in the cart.
+    def displayCart(self):
+
+        for i in range(len(self.cart)):
+            print "Book: ", i+1
+            print "\nBook Title = ", self.cart[i].getTitle()
+            print "\nAuthor = ", self.cart[i].getAuthor()
+            print "\nQuantity = ", self.cart[i].getQuantity()
 
     #remove a given book from the cart
     def removeFromCart(self, book):

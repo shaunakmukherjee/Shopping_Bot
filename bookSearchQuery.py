@@ -29,9 +29,8 @@ def bookSearch(url) :
         for a in links:
             #copy to the book_info
             url = a['href']
-        url = url.split(";")[0]
-        #bookInfo["url"] = url
-
+        #url = url.split(";")[0]
+        bookInfo["url"] = url
         bookInfo = Book(author, title, url)
         bookList.append(bookInfo)
     return bookList

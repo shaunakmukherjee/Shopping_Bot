@@ -13,7 +13,7 @@ class Book :
         self.bookInfo["author"] = author
         self.bookInfo["title"] = title
         self.bookInfo["url"] = url
-        self.bookInfo["quantity"] = 0
+        self.bookInfo["quantity"] = 1
         pass
 
     # auxiliary function added so that the __init__ works properly
@@ -29,6 +29,9 @@ class Book :
 
     def getURL(self) :
         return self.bookInfo["url"]
+    
+    def getQuantity(self) :
+        return self.bookInfo["quantity"]
 
     def incrementQuantity() :
         self.bookInfo["quantity"] += 1

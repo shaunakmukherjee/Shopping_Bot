@@ -1,6 +1,5 @@
 """
 BookShopper.py: Main Shopper program to start the search and cart transactions
-
 Authors: Vijaya Ram Illa
          Shaunak Mukherjee
 """
@@ -66,38 +65,59 @@ def displayResults(bookList) :
 
 # helper function to try and extract contents out of soup
 
-def soup_extract(newURL) :
+def selectedBookDetails(newURL) :
     content = requests.get(newURL).text
     soup = bs(content, "lxml")
-    # print soup.prettify()
-    review = soup.find(id="EditorialReviews")
-    current_price = soup.find(True, {"class" : "price current-price"})
-    discount = soup.find(True, {"class" : "discount-amount"})
+    # get book review:
+    allDivs = soup.find('div',attrs={'class':'flexColumn'})
+    #print allDivs
+    
+    links = allDivs.findAll('p')
+    review = ""
+    for link in links:
+        if not link.empty:
+            review += str(link.string)
+    
+    temp_price = soup.find(True, {"class" : "price current-price"})
+    currentPrice =  temp_price.contents[0]
+    discounts = soup.find(True, {"class" : "discount-amount"})
+    discount = 0
+    if discounts is not None :
+        discount = discounts.contents[0]
+
+    print "===================================================================="
     print "Review of the book -->\n", review
-    print "\nCURRENT PRICE --> ", current_price
+    print "\nCURRENT PRICE --> ", currentPrice
+    print "\nDiscount is  --> ", discount
+    print "===================================================================="
 
 # function to show reviews and prices for reference
 
 def addToCart (bookList, bookNo) :
-    cart = ShoppingCart()
 
     print "\n\nSelected Book: ", bookList[bookNo - 1].getTitle(), " by ", bookList[bookNo - 1].getAuthor()
-    newURL = 'http://www.barnesandnoble.com/s/' + bookList[bookNo - 1].getURL()
-    print "\nThe new URL is ->", newURL
-    
-    soup_extract(newURL)
+    newURL = 'http://www.barnesandnoble.com' + bookList[bookNo - 1].getURL()
+   
+    selectedBookDetails(newURL)
 
     proceed = raw_input("Add the book to the shopping bag?(y/n):  ")
-    if raw_input == 'y' :
+    if proceed == 'y' :
         #add to cart
         cart.add(bookList[bookNo - 1])
-    # DisplayCart
-    print cart.getCartNumber()
+
+    showCart = raw_input("Do you want to check the cart content?(y/n): ")
+    if showCart == 'y':
+        # DisplayCart
+        print "total items in the cart = ", cart.getCartNumber()
+        print "================================================================"
+        print "=========================CART DETAILS==========================="
+        print "================================================================"
+        cart.displayCart()
 
     
     choice_shipping = input("\n\nContinue to billing?\n\n 1 for YES, 0 for NO!\n\n")
     if choice_shipping == 0 :
-        mainMenu()
+        pass
     else :
         shipping(bookList, bookNo)
 
@@ -144,6 +164,9 @@ def welcomeMenu() :
 loop=True
 
 while loop:
+    #create cart
+    cart = ShoppingCart()
+
     welcomeMenu()
     option = input("Enter choice: ")
     if option == 1 :
