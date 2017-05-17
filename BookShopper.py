@@ -1,15 +1,16 @@
-""" 
-Bookshopper.py
-
-Base function which contains the menu-driven initial approach to the Shopping Bot
-Authors : Shaunak Mukherjee ; Vijayaram Illa
-
 """
-import sys
+BookShopper.py: Main Shopper program to start the search and cart transactions
+
+Authors: Vijaya Ram Illa
+         Shaunak Mukherjee
+"""
+
+
 import requests
 from bs4 import BeautifulSoup as bs
 from bookSearchQuery import bookSearch
-
+from Book import Book
+from ShoppingCart import ShoppingCart
 
 def shopper(book_name) :
     bookname = book_name.lower()
@@ -18,16 +19,15 @@ def shopper(book_name) :
     bookList = bookSearch(url)
 
     #call the print function
-        displayResults(bookList)
+    displayResults(bookList)
     # ask user to select a book
-    """
+    
     bookNo = input("Slect the book number to checkout or press enter exit to main menu: ") 
     if option == "" :
         return
     else :
-        addToBag(bookList, bookNo)
-    """
-
+        addToCart(bookList, bookNo)
+    
 def displayResults(bookList) : 
 
     print " ============================================================"
@@ -41,12 +41,16 @@ def displayResults(bookList) :
         #print i+1 ," " * 5,bookList[i]["title"]," " * 20,bookList[i]["author"]
         print i+1 ," " * 5,bookList[i].getTitle()," " * 20,bookList[i].getAuthor()
 
-"""    
-def addToBag (bookList, bookNo) :
-    print "Selected Book: ", bookList[bookNo - 1]["title"], " by ", bookList[bookNo - 1]["author"]
-    newURL = 'http://www.barnesandnoble.com/s/' + bookList[bookNo - 1]["url"]
+    
+def addToCart (bookList, bookNo) :
+    cart = ShoppingCart()
+
+    print "Selected Book: ", bookList[bookNo - 1].getTitle(), " by ", bookList[bookNo - 1].getAuthor()
+    newURL = 'http://www.barnesandnoble.com/s/' + bookList[bookNo - 1].getURL()
+    print newURL
+    
     content = requests.get(newURL).text
-"    soup = bs(content, "lxml")
+    soup = bs(content, "lxml")
     print soup.prettify()
     detailed_review = soup.find(True, {"class" : "flexColumn"})
     current_price = soup.find(True, {"class" : "price current-price"})
@@ -55,24 +59,22 @@ def addToBag (bookList, bookNo) :
     print "\nCURRENT PRICE --> ", current_price.text.encode("utf-8")
 
     proceed = raw_input("Add the book to the shopping bag?(y/n):  ")
-    if raw_input == y :
-        #proceed to pay
-        return 
-    else :
-        #call display results function to display results again
-        return
-"""
+    if raw_input == 'y' :
+        #add to cart
+        cart.add(bookList[bookNo - 1])
+    # DisplayCart
+    print cart.getCartNumber()
 
-
+        
 def welcomeMenu() :
-    print " ============================================================================\n"
-    print " **************Welcome to the  600.466 Automatic BookShopper ****************\n" 
-    print " ============================================================================\n"
-    print "1. Search through Book Name"
-    print "2. Search through Author Name"
-    print "3. Get the reviews of a book"
+    print " ============================================================"
+    print " ************** 600.466 Automatic BookShopper ***************" 
+    print " ============================================================"
+    print "1. Select to enter the Book Name"
+    print "2. Select to Enter the Author Name"
+    print "3. Select to get the reviews of a book"
     print "4. Exit"
-    #print 67 * "-"
+    print 67 * "-"
 
 
 loop=True
@@ -85,5 +87,3 @@ while loop:
         bookName = raw_input()
         print "entered book name is: ", bookName
         shopper(bookName)
-    if option == 4 :
-        sys.exit() # to terminate the script
