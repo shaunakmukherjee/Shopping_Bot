@@ -20,7 +20,7 @@ def shopper(book_name) :
 
     # call the print function
     displayResults(bookList)  # ask user to select a book 
-    bookNo = input("Slect the book number to checkout or press enter exit to main menu: ") 
+    bookNo = input("\n\nSelect the book number to checkout or press enter exit to main menu: ") 
     if option == "" :
         return
     else :
@@ -35,12 +35,12 @@ def author_search(author_name) :
     authorList = bookSearch(url)
 
     #call the print function
-    displayResults(bookList) # ask user to select a book   
-    bookNo = input("Slect the book number to checkout or press enter exit to main menu: ") 
+    displayResults(authorList) # ask user to select a book   
+    bookNo = input("\n\nSelect the book number to checkout or press enter exit to main menu: ") 
     if option == "" :
         return
     else :
-		addToCart(bookList, bookNo)
+		addToCart(authorList, bookNo)
 
 def displayResults(bookList) : 
 
@@ -61,9 +61,9 @@ def displayResults(bookList) :
 def addToCart (bookList, bookNo) :
     cart = ShoppingCart()
 
-    print "Selected Book: ", bookList[bookNo - 1].getTitle(), " by ", bookList[bookNo - 1].getAuthor()
+    print "\n\nSelected Book: ", bookList[bookNo - 1].getTitle(), " by ", bookList[bookNo - 1].getAuthor()
     newURL = 'http://www.barnesandnoble.com/s/' + bookList[bookNo - 1].getURL()
-    print "The new URL is ->", newURL
+    print "\nThe new URL is ->", newURL
     
     content = requests.get(newURL).text
     soup = bs(content, "lxml")
