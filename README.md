@@ -1,5 +1,7 @@
 # CS 466 Final Project - AUTOMATIC BOOKSHOPPER
-# Team members : Shaunak Mukherjee (smukhe15) ; Vijayaram Illa (villa1)
+# Team members : 
+- Shaunak Mukherjee (smukhe15) 
+- Vijayaram Illa (villa1)
 
 Files included :
 
